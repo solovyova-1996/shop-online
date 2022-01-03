@@ -9,7 +9,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index, name='index'),
     path('products/', include('mainapp.urls', namespace='products')),
-    # path('users/', include('usrs.urls', namespace='users')),
+    path('users/', include('users.urls', namespace='users')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
