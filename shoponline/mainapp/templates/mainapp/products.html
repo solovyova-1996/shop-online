@@ -72,8 +72,8 @@
                     <div class="card h-100">
                         <a href="#">
                             <img class="card-img-top"
-                                 src="/media/{{product.img}}"
-                                 alt="">
+                            src="{{ product.img.url }}"
+                            alt="">
                         </a>
                         <div class="card-body">
                             <h4 class="card-title">
@@ -121,7 +121,8 @@
 {% block footer %}
 <footer class="py-5 bg-dark">
     <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; GeekShop {% now 'Y' %} </p>
+        <p class="m-0 text-center text-white">Copyright &copy; GeekShop {% now
+            'Y' %} </p>
     </div>
     <!-- /.container -->
 </footer>
