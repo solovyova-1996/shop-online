@@ -2,6 +2,7 @@ from django.contrib import auth, messages
 from django.shortcuts import render, HttpResponseRedirect
 from django.urls import reverse
 
+from basket.models import Basket
 from users.forms import UserLoginForm, UserRegisterForm, UserProfileForm
 
 
@@ -61,6 +62,7 @@ def profile(request):
     context = {
         'title': 'Пофиль',
         # если есть одинаковые поля у юзера и формы, то они заполняться даннными
-        'form': UserProfileForm(instance=request.user)
+        'form': UserProfileForm(instance=request.user),
+        'basket': Basket.objects.filter(user=request.user),
     }
     return render(request, 'users/profile.html', context=context)
