@@ -2,7 +2,7 @@ from django.contrib import auth, messages
 from django.shortcuts import render, HttpResponseRedirect
 from django.urls import reverse
 
-from users.forms import UserLoginForm, UserRegisterForm
+from users.forms import UserLoginForm, UserRegisterForm, UserProfileForm
 
 
 def login(request):
@@ -50,7 +50,17 @@ def logout(request):
 
 
 def profile(request):
+    if request.method == 'POST':
+        # экземпляр юзера уже существует и при пост запросе будет обновлен
+        form = UserProfileForm(data=request.POST, instance=request.user,files=request.FILES)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('users:profile'))
+        else:
+            print(form.errors)
     context = {
         'title': 'Пофиль',
+        # если есть одинаковые поля у юзера и формы, то они заполняться даннными
+        'form': UserProfileForm(instance=request.user)
     }
     return render(request, 'users/profile.html', context=context)
