@@ -34,28 +34,22 @@
                                 </tr>
                                 </tfoot>
                                 <tbody>
+                                {% for user in users %}
                                 <tr>
-                                    <td><a href="#" style="color: dodgerblue">test</a></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td class="text-center"><i class="fas fa-check-circle"></i></td>
-                                    <td class="text-center"><i class="fas fa-check-circle"></i></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="admin-users-update-delete.html" style="color: dodgerblue">nikolay</a></td>
-                                    <td>Nikolay</td>
-                                    <td>Nagornyy</td>
-                                    <td>isp06.ru</td>
+                                    <td><a href="{% url 'admins:users-update' user.id %}" style="color: dodgerblue">{{ user.username }}</a></td>
+                                    <td>{{ user.first_name }}</td>
+                                    <td>{{ user.last_name }}</td>
+                                    <td>{{ user.email }}</td>
                                     <td class="text-center"><i class="fas fa-times-circle"></i></td>
                                     <td class="text-center"><i class="fas fa-times-circle"></i></td>
                                 </tr>
+                                {% endfor %}
                                 </tbody>
                             </table>
                         </div>
                     </div>
                     <div class="card-footer">
-                        <a href="admin-users-create.html">
+                        <a href="{% url 'admins:users-create' %}">
                             <button class="btn btn-success">Создать пользователя</button>
                         </a>
                     </div>
