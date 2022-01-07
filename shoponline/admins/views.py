@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
+from shoponline.mixin import CustomDispatchMixin
 from users.models import User
 from admins.forms import UserAdminRegisterForm, UserAdminProfileForm
 
@@ -10,7 +11,7 @@ def index(request):
     return render(request, 'admins/admin.html')
 
 
-class UserListView(ListView):
+class UserListView(ListView,CustomDispatchMixin):
     model = User
     template_name = 'admins/admin-users-read.html'
     context_object_name = 'users'
@@ -21,7 +22,7 @@ class UserListView(ListView):
         return context
 
 
-class UserCreateView(CreateView):
+class UserCreateView(CreateView,CustomDispatchMixin):
     model = User
     template_name = 'admins/admin-users-create.html'
     form_class = UserAdminRegisterForm
@@ -33,7 +34,7 @@ class UserCreateView(CreateView):
         return context
 
 
-class UserUpdateView(UpdateView):
+class UserUpdateView(UpdateView,CustomDispatchMixin):
     model = User
     template_name = 'admins/admin-users-update-delete.html'
     form_class = UserAdminProfileForm
@@ -44,7 +45,7 @@ class UserUpdateView(UpdateView):
         context['title'] = 'Админка | Редактирование пользователя'
         return context
 
-class UserDeleteView(DeleteView):
+class UserDeleteView(DeleteView,CustomDispatchMixin):
     model = User
     template_name = 'admins/admin-users-update-delete.html'
     success_url = reverse_lazy('admins:admins-users')
