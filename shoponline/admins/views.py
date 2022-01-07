@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
 from users.models import User
-from admins.forms import UserAdminRegisterForm
+from admins.forms import UserAdminRegisterForm, UserAdminProfileForm
 
 
 def index(request):
@@ -34,8 +34,15 @@ class UserCreateView(CreateView):
 
 
 class UserUpdateView(UpdateView):
-    pass
+    model = User
+    template_name = 'admins/admin-users-update-delete.html'
+    form_class = UserAdminProfileForm
+    success_url = reverse_lazy('admins:admins-users')
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(UserUpdateView, self).get_context_data(**kwargs)
+        context['title'] = 'Админка | Редактирование пользователя'
+        return context
 
 class UserDeleteView(DeleteView):
     pass
