@@ -100,3 +100,4 @@ MEDIA_ROOT = BASE_DIR / 'media'
 AUTH_USER_MODEL = 'users.User'
 # Для перенаправления незалогиненых пользвателей на страницу входа
 LOGIN_URL = '/users/login/'
+LOGIN_REDIRECT_URL = '/'
