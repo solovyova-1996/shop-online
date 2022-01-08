@@ -2,11 +2,11 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
-from mainapp.models import Category
+from mainapp.models import Category, Product
 from shoponline.mixin import CustomDispatchMixin
 from users.models import User
 from admins.forms import UserAdminRegisterForm, UserAdminProfileForm, \
-    CategoryAdminCreate
+    CategoryAdminCreate, ProductAdmin
 
 
 def index(request):
@@ -60,7 +60,7 @@ class UserDeleteView(DeleteView, CustomDispatchMixin):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class CategoryListView(ListView):
+class CategoryListView(ListView, CustomDispatchMixin):
     model = Category
     template_name = 'admins/admin-categories-read.html'
     context_object_name = 'categories'
@@ -71,19 +71,20 @@ class CategoryListView(ListView):
         return context
 
 
-class CategoryCreateView(CreateView):
+class CategoryCreateView(CreateView, CustomDispatchMixin):
     model = Category
     template_name = 'admins/admin-categories-create.html'
     form_class = CategoryAdminCreate
     success_url = reverse_lazy('admins:admins-categories')
     context_object_name = 'categories'
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(CategoryCreateView, self).get_context_data(**kwargs)
         context['title'] = 'Админка | Создание категории'
         return context
 
 
-class CategoryUpdateView(UpdateView):
+class CategoryUpdateView(UpdateView, CustomDispatchMixin):
     model = Category
     template_name = 'admins/admin-categories-update-delete.html'
     form_class = CategoryAdminCreate
@@ -95,8 +96,50 @@ class CategoryUpdateView(UpdateView):
         return context
 
 
-class CategoryDeleteView(DeleteView):
+class CategoryDeleteView(DeleteView, CustomDispatchMixin):
     model = Category
     template_name = 'admins/admin-categories-update-delete.html'
     success_url = reverse_lazy('admins:admins-categories')
     context_object_name = 'categories'
+
+
+class ProductListView(ListView):
+    model = Product
+    template_name = 'admins/admin-product-read.html'
+    success_url = reverse_lazy('admins:products')
+    context_object_name = 'products'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(ProductListView, self).get_context_data(**kwargs)
+        context['title'] = 'Админка | Товары'
+        return context
+
+
+class ProductCreateView(CreateView, CustomDispatchMixin):
+    model = Product
+    form_class = ProductAdmin
+    template_name = 'admins/admin-product-create.html'
+    success_url = reverse_lazy('admins:products')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(ProductCreateView, self).get_context_data(**kwargs)
+        context['title'] = 'Админка | Создание товара'
+        return context
+
+
+class ProductUpdateView(UpdateView, CustomDispatchMixin):
+    model = Product
+    form_class = ProductAdmin
+    template_name = 'admins/admin-product-update-delete.html'
+    success_url = reverse_lazy('admins:products')
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(ProductUpdateView, self).get_context_data(**kwargs)
+        context['title'] = 'Админка | Редактирование товара'
+        return context
+
+
+class ProductDeleteView(DeleteView, CustomDispatchMixin):
+    model = Product
+    template_name = 'admins/admin-product-update-delete.html'
+    success_url = reverse_lazy('admins:products')

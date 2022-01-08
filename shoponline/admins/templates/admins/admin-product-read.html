@@ -1,0 +1,71 @@
+{% extends 'admins/base.html' %}
+{% block content %}
+
+<div id="layoutSidenav_content">
+    <main>
+        <div class="container-fluid">
+            <h1 class="mt-4">Товары</h1>
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fas fa-table mr-1"></i>
+                    Товары
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th>Название товара</th>
+                                <th>Изображение</th>
+                                <th>Описание</th>
+                                <th>Цена</th>
+                                <th>Количество</th>
+                                <th>Категория</th>
+                            </tr>
+                            </thead>
+                            <tfoot>
+                            <tr>
+                                <th>Название товара</th>
+                                <th>Изображение</th>
+                                <th>Описание</th>
+                                <th>Цена</th>
+                                <th>Количество</th>
+                                <th>Категория</th>
+                            </tr>
+                            </tfoot>
+                            <tbody>
+                            {% for prod in products %}
+                            <tr>
+                                <td><a href="{% url 'admins:product-update' prod.id %}" style="color: dodgerblue">{{
+                                    prod.name }}</a></td>
+                                <td>{{ prod.img }}</td>
+                                <td>{{ prod.description }}</td>
+                                <td>{{ prod.price }}</td>
+                                <td>{{ prod.quantity }}</td>
+                                <td>{{ prod.category }}</td>
+
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'admins:product-create' %}">
+                        <button class="btn btn-success">Создать продукт</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="py-4 bg-light mt-auto">
+        <div class="container-fluid">
+            <div class="d-flex align-items-center justify-content-between small">
+                <div class="text-muted">Copyright &copy; GeekShop 2021</div>
+            </div>
+        </div>
+    </footer>
+</div>
+
+{% endblock %}
+
