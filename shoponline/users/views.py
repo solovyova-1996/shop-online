@@ -53,10 +53,10 @@ class Profile(UpdateView, BaseClassContextMixin, CustomAuthDispatchMixin):
     def get_object(self, queryset=None):
         return get_object_or_404(User, pk=self.request.user.pk)
 
-    def get_context_data(self, *args, **kwargs):
-        context = super(Profile, self).get_context_data(*args, **kwargs)
-        context['basket'] = Basket.objects.filter(user=self.request.user)
-        return context
+    # def get_context_data(self, *args, **kwargs):
+    #     context = super(Profile, self).get_context_data(*args, **kwargs)
+    #     context['basket'] = Basket.objects.filter(user=self.request.user)
+    #     return context
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(data=request.POST, instance=self.get_object(),
