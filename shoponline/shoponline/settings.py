@@ -9,12 +9,13 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import os
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+load_dotenv(BASE_DIR / '.env')
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
@@ -63,13 +64,13 @@ DATABASES = {'default': {'ENGINE': 'django.db.backends.sqlite3',
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [{
-                                'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator', },
-                            {
-                                'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator', },
-                            {
-                                'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator', },
-                            {
-                                'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator', }, ]
+    'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator', },
+    {
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator', },
+    {
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator', },
+    {
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator', }, ]
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
@@ -101,3 +102,24 @@ AUTH_USER_MODEL = 'users.User'
 # Для перенаправления незалогиненых пользвателей на страницу входа
 LOGIN_URL = '/users/login/'
 LOGIN_REDIRECT_URL = '/'
+
+# DOMAIN_NAME = 'http:/localhost:8000'
+# EMAIL_HOST = 'localhost'
+# EMAIL_PORT = 25
+# EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+# EMAIL_USE_SSL = True
+# # отправка файла
+# EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+# EMAIL_FILE_PATH = 'tmp/emails'
+
+# EMAIL_HOST_USER, EMAIL_HOST_PASSWORD = None, None
+# команда для запуска
+# python -m smtpd -n -c DebuggingServer localhost:25
+# отправка yandex почты
+DOMAIN_NAME = 'http:/localhost:8000'
+EMAIL_HOST = 'smtp.yandex.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_USE_SSL = True

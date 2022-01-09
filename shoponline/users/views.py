@@ -1,5 +1,7 @@
+from django.conf import settings
 from django.contrib import auth, messages
 from django.contrib.auth.views import LoginView, LogoutView
+from django.core.mail import send_mail
 from django.shortcuts import render, HttpResponseRedirect, redirect, \
     get_object_or_404
 from django.urls import reverse, reverse_lazy
@@ -33,8 +35,9 @@ class Register(FormView, BaseClassContextMixin):
     def post(self, request, *args, **kwargs):
         form = self.form_class(data=request.POST)
         if form.is_valid():
-            form.save()
-            messages.success(request, "Вы успешно зарегистрировались")
+            user = form.save()
+            if send_verify_link(user):
+                messages.success(request, "Вы успешно зарегистрировались")
             return redirect(self.success_url)
 
         return redirect(self.success_url)
@@ -102,20 +105,42 @@ class Profile(UpdateView, BaseClassContextMixin, CustomAuthDispatchMixin):
 #     return HttpResponseRedirect(reverse('index'))
 
 
-@login_required
-def profile(request):
-    if request.method == 'POST':
-        # экземпляр юзера уже существует и при пост запросе будет обновлен
-        form = UserProfileForm(data=request.POST, instance=request.user,
-                               files=request.FILES)
-        if form.is_valid():
-            form.save()
-            messages.success(request, 'Профиль сохранен')
-            return HttpResponseRedirect(reverse('users:profile'))
-        else:
-            messages.error(request, 'Профиль не сохранен')
-    context = {'title': 'Пофиль',
-               # если есть одинаковые поля у юзера и формы, то они заполняться даннными
-               'form': UserProfileForm(instance=request.user),
-               'basket': Basket.objects.filter(user=request.user), }
-    return render(request, 'users/profile.html', context=context)
+# @login_required
+# def profile(request):
+#     if request.method == 'POST':
+#         # экземпляр юзера уже существует и при пост запросе будет обновлен
+#         form = UserProfileForm(data=request.POST, instance=request.user,
+#                                files=request.FILES)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, 'Профиль сохранен')
+#             return HttpResponseRedirect(reverse('users:profile'))
+#         else:
+#             messages.error(request, 'Профиль не сохранен')
+#     context = {'title': 'Пофиль',
+#                # если есть одинаковые поля у юзера и формы, то они заполняться даннными
+#                'form': UserProfileForm(instance=request.user),
+#                'basket': Basket.objects.filter(user=request.user), }
+#     return render(request, 'users/profile.html', context=context)
+def send_verify_link(user):
+    verify_link = reverse('users:verify',
+                          args=[user.email, user.activation_key])
+    title = f'для активации учетной записи {user.username} пройдите по ссылке '
+    messages = f'Для подтверждения учетной записи{user.username} на портале \n {settings.DOMAIN_NAME}{verify_link}'
+    # функция django для отправки писем
+    return send_mail(title,messages,settings.EMAIL_HOST_USER,[user.email],fail_silently=False)
+
+
+def verify(request, email, activation_key):
+    try:
+        user = User.objects.get(email=email)
+        if user and user.activation_key == activation_key and not user.is_activation_key_expired():
+            user.activation_key = ''
+            user.activation_key_created = None
+            print(user)
+            user.is_active = True
+            user.save()
+            auth.login(request, user)
+        return render(request, 'users/verification.html')
+    except Exception as e:
+        return HttpResponseRedirect(reverse('index'))
