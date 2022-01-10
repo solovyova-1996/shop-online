@@ -36,10 +36,10 @@ class UserProfile(models.Model):
 
     # создание сигнала (после сохранения пользователя создается профайл)
     @receiver(post_save, sender=User)
-    def create_user_profile(sender, instance, create, **kwargs):
-        if create:
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
             UserProfile.objects.create(user=instance)
     # сохраняется информация при обновлении профиля
     @receiver(post_save, sender=User)
-    def save_user_profile(sender, insnance, **kwargs):
-        insnance.userprofile.save()
+    def save_user_profile(sender, instance, **kwargs):
+        instance.userprofile.save()

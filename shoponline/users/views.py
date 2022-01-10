@@ -56,13 +56,14 @@ class Profile(UpdateView, BaseClassContextMixin, CustomAuthDispatchMixin):
     def get_context_data(self, *args, **kwargs):
         context = super(Profile, self).get_context_data(*args, **kwargs)
         context['basket'] = Basket.objects.filter(user=self.request.user)
+        context['profile'] = UserProfileEditForm(instance=self.request.user.userprofile)
         return context
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(data=request.POST, instance=self.get_object(),
                                files=request.FILES)
-        form_edit = UserProfileEditForm(data=request.POST,instance=request.user.userpofile)
-        if form.is_valid() and form_edit.is_valid():
+        userprofile = UserProfileEditForm(data=request.POST,instance=request.user.userprofile)
+        if form.is_valid() and userprofile.is_valid():
             form.save()
             return redirect(self.success_url)
         return redirect(self.success_url)
