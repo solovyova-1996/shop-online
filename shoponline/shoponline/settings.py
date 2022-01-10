@@ -32,7 +32,7 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = ['django.contrib.admin', 'django.contrib.auth',
                   'django.contrib.contenttypes', 'django.contrib.sessions',
                   'django.contrib.messages', 'django.contrib.staticfiles',
-                  'mainapp', 'users', 'basket', 'admins']
+                  'mainapp', 'users', 'basket', 'admins', 'social_django', ]
 
 MIDDLEWARE = ['django.middleware.security.SecurityMiddleware',
               'django.contrib.sessions.middleware.SessionMiddleware',
@@ -40,18 +40,20 @@ MIDDLEWARE = ['django.middleware.security.SecurityMiddleware',
               'django.middleware.csrf.CsrfViewMiddleware',
               'django.contrib.auth.middleware.AuthenticationMiddleware',
               'django.contrib.messages.middleware.MessageMiddleware',
-              'django.middleware.clickjacking.XFrameOptionsMiddleware', ]
+              'django.middleware.clickjacking.XFrameOptionsMiddleware',
+              # 'social_django.middleware.SocialAuthExceptionMiddleware',
+              ]
 
 ROOT_URLCONF = 'shoponline.urls'
 
 TEMPLATES = [{'BACKEND': 'django.template.backends.django.DjangoTemplates',
-              'DIRS': [BASE_DIR / 'templates'], 'APP_DIRS': True,
-              'OPTIONS': {
+              'DIRS': [BASE_DIR / 'templates'], 'APP_DIRS': True, 'OPTIONS': {
 
         'context_processors': ['django.template.context_processors.debug',
                                'django.template.context_processors.request',
                                'django.contrib.auth.context_processors.auth',
-                               'django.contrib.messages.context_processors.messages','mainapp.context_processors.basket' ], }, }, ]
+                               'django.contrib.messages.context_processors.messages',
+                               ], }, }, ]
 
 WSGI_APPLICATION = 'shoponline.wsgi.application'
 
@@ -125,3 +127,19 @@ EMAIL_PORT = 465
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_USE_SSL = True
+# ID	8046914
+# защищеггый ключ для вк 4STl9WQwoYosEC8T6aPw
+# сервиснаф ключ 3f02362c3f02362c3f02362c903f78ff6e33f023f02362c5ede36633db89aefde5a19f7
+# SOCIAL_AUTH_VK_OAUTH2_KEY = '7976841'
+# SOCIAL_AUTH_VK_OAUTH2_SECRET = 'O70D18ptGnNi1VDjMOUs'
+# SOCIAL_AUTH_VK_OAUTH2_API_VERSION = '5.131'
+
+SOCIAL_AUTH_VK_OAUTH2_KEY = '8046914'
+SOCIAL_AUTH_VK_OAUTH2_SECRET = '4STl9WQwoYosEC8T6aPw'
+SOCIAL_AUTH_VK_OAUTH2_API_VERSION = '5.131'
+SOCIAL_AUTH_VK_OAUTH2_IGNORE_DEFAULT_SCORE = True
+SOCIAL_AUTH_VK_OAUTH2_SCORE = ['email']
+AUTHENTICATION_BACKEND = (
+                          'django.contrib.auth.backends.ModelBackend',
+                                'social_core.backends.vk.VKOAuth2',
+                          )
