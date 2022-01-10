@@ -3,6 +3,8 @@ from datetime import timedelta
 from django.db import models
 
 from django.contrib.auth.models import AbstractUser
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils.timezone import now
 
 
@@ -18,3 +20,26 @@ class User(AbstractUser):
         if now() <= self.activation_key_created + timedelta(hours=48):
             return False
         return True
+
+
+class UserProfile(models.Model):
+    MALE = 'M'
+    FEMALE = 'W'
+
+    GENDER_CHOICES = ((MALE, 'M'), (FEMALE, 'F'))
+    user = models.OneToOneField(User, unique=True, null=False, db_index=True,
+                                on_delete=models.CASCADE)
+    tagline = models.CharField(verbose_name='теги', max_length=128, blank=True)
+    about = models.TextField(verbose_name='о себе', blank=True, null=True)
+    gender = models.CharField(verbose_name='пол', choices=GENDER_CHOICES,
+                              blank=True, max_length=5)
+
+    # создание сигнала (после сохранения пользователя создается профайл)
+    @receiver(post_save, sender=User)
+    def create_user_profile(sender, instance, create, **kwargs):
+        if create:
+            UserProfile.objects.create(user=instance)
+    # сохраняется информация при обновлении профиля
+    @receiver(post_save, sender=User)
+    def save_user_profile(sender, insnance, **kwargs):
+        insnance.userprofile.save()

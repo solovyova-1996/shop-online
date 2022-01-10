@@ -9,7 +9,7 @@ from django.views.generic import ListView, FormView, UpdateView
 
 from basket.models import Basket
 from shoponline.mixin import BaseClassContextMixin, CustomAuthDispatchMixin
-from users.forms import UserLoginForm, UserRegisterForm, UserProfileForm
+from users.forms import UserLoginForm, UserRegisterForm, UserProfileForm, UserProfileEditForm
 from django.contrib.auth.decorators import login_required
 
 from users.models import User
@@ -61,7 +61,8 @@ class Profile(UpdateView, BaseClassContextMixin, CustomAuthDispatchMixin):
     def post(self, request, *args, **kwargs):
         form = self.form_class(data=request.POST, instance=self.get_object(),
                                files=request.FILES)
-        if form.is_valid():
+        form_edit = UserProfileEditForm(data=request.POST,instance=request.user.userpofile)
+        if form.is_valid() and form_edit.is_valid():
             form.save()
             return redirect(self.success_url)
         return redirect(self.success_url)
