@@ -10,7 +10,7 @@ urlpatterns = [path('admin/', admin.site.urls), path('', index, name='index'),
     path('users/', include('users.urls', namespace='users')),
     path('basket/', include('basket.urls', namespace='basket')),
     path('admins/', include('admins.urls', namespace='admins')),
-    path('admins/', include('ordersapp.urls', namespace='ordersapp')),
+    path('orders/', include('ordersapp.urls', namespace='orders')),
     path('', include('social_django.urls', namespace='social')),
                ]
 if settings.DEBUG:
