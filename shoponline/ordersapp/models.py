@@ -21,7 +21,7 @@ class Order(models.Model):
     status = models.CharField(choices=CHOICE_ORDER_STATUS,
                               verbose_name='статус', max_length=3,
                               default=FORMING)
-
+    is_active = models.BooleanField(verbose_name='активный',default=True)
     def __str__(self):
         return f'Текущий заказа {self.pk}'  # def total_quantity(self):  #     items =
 
@@ -37,6 +37,12 @@ class Order(models.Model):
     def get_items(self):
         pass
 
+    def delete(self, using=None, keep_parents=False):
+        for item in self.orderitems.select_related():
+            item.product.quantity += item.quantity
+            item.save()
+        self.is_active = False
+        self.save()
 
 class OrderItem(models.Model):
     # в модели хранятся товары и то к какому заказу они относятся
