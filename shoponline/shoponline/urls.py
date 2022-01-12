@@ -10,6 +10,8 @@ urlpatterns = [path('admin/', admin.site.urls), path('', index, name='index'),
     path('users/', include('users.urls', namespace='users')),
     path('basket/', include('basket.urls', namespace='basket')),
     path('admins/', include('admins.urls', namespace='admins')),
-    path('', include('social_django.urls', namespace='social')), ]
+    path('admins/', include('ordersapp.urls', namespace='ordersapp')),
+    path('', include('social_django.urls', namespace='social')),
+               ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
