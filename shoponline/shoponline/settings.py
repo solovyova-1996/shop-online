@@ -32,7 +32,7 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = ['django.contrib.admin', 'django.contrib.auth',
                   'django.contrib.contenttypes', 'django.contrib.sessions',
                   'django.contrib.messages', 'django.contrib.staticfiles',
-                  'mainapp', 'users', 'basket', 'admins', 'social_django', ]
+                  'mainapp', 'users', 'basket', 'admins', 'ordersapp', 'social_django', ]
 
 MIDDLEWARE = ['django.middleware.security.SecurityMiddleware',
               'django.contrib.sessions.middleware.SessionMiddleware',
@@ -41,7 +41,7 @@ MIDDLEWARE = ['django.middleware.security.SecurityMiddleware',
               'django.contrib.auth.middleware.AuthenticationMiddleware',
               'django.contrib.messages.middleware.MessageMiddleware',
               'django.middleware.clickjacking.XFrameOptionsMiddleware',
-              # 'social_django.middleware.SocialAuthExceptionMiddleware',
+              'social_django.middleware.SocialAuthExceptionMiddleware',
               ]
 
 ROOT_URLCONF = 'shoponline.urls'
@@ -53,6 +53,8 @@ TEMPLATES = [{'BACKEND': 'django.template.backends.django.DjangoTemplates',
                                'django.template.context_processors.request',
                                'django.contrib.auth.context_processors.auth',
                                'django.contrib.messages.context_processors.messages',
+'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
                                ], }, }, ]
 
 WSGI_APPLICATION = 'shoponline.wsgi.application'
@@ -106,7 +108,7 @@ AUTH_USER_MODEL = 'users.User'
 # Для перенаправления незалогиненых пользвателей на страницу входа
 LOGIN_URL = '/users/login/'
 LOGIN_REDIRECT_URL = '/'
-
+LOGIN_ERROR_URL = '/'
 # DOMAIN_NAME = 'http:/localhost:8000'
 # EMAIL_HOST = 'localhost'
 # EMAIL_PORT = 25
@@ -139,7 +141,18 @@ SOCIAL_AUTH_VK_OAUTH2_SECRET = '4STl9WQwoYosEC8T6aPw'
 SOCIAL_AUTH_VK_OAUTH2_API_VERSION = '5.131'
 SOCIAL_AUTH_VK_OAUTH2_IGNORE_DEFAULT_SCORE = True
 SOCIAL_AUTH_VK_OAUTH2_SCORE = ['email']
-AUTHENTICATION_BACKEND = (
+AUTHENTICATION_BACKENDS = (
                           'django.contrib.auth.backends.ModelBackend',
                                 'social_core.backends.vk.VKOAuth2',
                           )
+SOCIAL_AUTH_PIPELINE = (
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.create_user',
+    'users.pipelines.save_user_profile',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+)

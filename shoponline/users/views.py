@@ -9,7 +9,8 @@ from django.views.generic import ListView, FormView, UpdateView
 
 from basket.models import Basket
 from shoponline.mixin import BaseClassContextMixin, CustomAuthDispatchMixin
-from users.forms import UserLoginForm, UserRegisterForm, UserProfileForm, UserProfileEditForm
+from users.forms import UserLoginForm, UserRegisterForm, UserProfileForm, \
+    UserProfileEditForm
 from django.contrib.auth.decorators import login_required
 
 from users.models import User
@@ -56,13 +57,15 @@ class Profile(UpdateView, BaseClassContextMixin, CustomAuthDispatchMixin):
     def get_context_data(self, *args, **kwargs):
         context = super(Profile, self).get_context_data(*args, **kwargs)
         context['basket'] = Basket.objects.filter(user=self.request.user)
-        context['profile'] = UserProfileEditForm(instance=self.request.user.userprofile)
+        context['profile'] = UserProfileEditForm(
+            instance=self.request.user.userprofile)
         return context
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(data=request.POST, instance=self.get_object(),
                                files=request.FILES)
-        userprofile = UserProfileEditForm(data=request.POST,instance=request.user.userprofile)
+        userprofile = UserProfileEditForm(data=request.POST,
+                                          instance=request.user.userprofile)
         if form.is_valid() and userprofile.is_valid():
             form.save()
             return redirect(self.success_url)
@@ -130,7 +133,8 @@ def send_verify_link(user):
     title = f'для активации учетной записи {user.username} пройдите по ссылке '
     messages = f'Для подтверждения учетной записи{user.username} на портале \n {settings.DOMAIN_NAME}{verify_link}'
     # функция django для отправки писем
-    return send_mail(title,messages,settings.EMAIL_HOST_USER,[user.email],fail_silently=False)
+    return send_mail(title, messages, settings.EMAIL_HOST_USER, [user.email],
+                     fail_silently=False)
 
 
 def verify(request, email, activation_key):
@@ -141,7 +145,8 @@ def verify(request, email, activation_key):
             user.activation_key_created = None
             user.is_active = True
             user.save()
-            auth.login(request, user)
+            auth.login(request, user,
+                       backend='django.contrib.auth.backends.ModelBackend')
         return render(request, 'users/verification.html')
     except Exception as e:
         return HttpResponseRedirect(reverse('index'))
