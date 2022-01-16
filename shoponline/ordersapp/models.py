@@ -1,5 +1,8 @@
 from django.conf import settings
 from django.db import models
+from django.db.models.signals import pre_delete, pre_save
+from django.dispatch import receiver
+
 
 from mainapp.models import Product
 
@@ -21,7 +24,8 @@ class Order(models.Model):
     status = models.CharField(choices=CHOICE_ORDER_STATUS,
                               verbose_name='статус', max_length=3,
                               default=FORMING)
-    is_active = models.BooleanField(verbose_name='активный',default=True)
+    is_active = models.BooleanField(verbose_name='активный', default=True)
+
     def __str__(self):
         return f'Текущий заказа {self.pk}'  # def total_quantity(self):  #     items =
 
@@ -44,6 +48,7 @@ class Order(models.Model):
         self.is_active = False
         self.save()
 
+
 class OrderItem(models.Model):
     # в модели хранятся товары и то к какому заказу они относятся
     # с помощью related_name можно обратиться(из Order) ко всем товарам заказа
@@ -55,3 +60,7 @@ class OrderItem(models.Model):
 
     def get_product_cost(self):
         return self.product.price * self.quantity
+
+    @staticmethod
+    def get_item(pk):
+        return OrderItem.objects.get(pk=pk).quantity
