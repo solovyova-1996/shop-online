@@ -1,12 +1,13 @@
 from django.db import transaction
 from django.forms import inlineformset_factory
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, \
     DetailView
 
 from basket.models import Basket
+from mainapp.models import Product
 from ordersapp.forms import OrderItemsForm
 from ordersapp.models import Order, OrderItem
 from shoponline.mixin import BaseClassContextMixin
@@ -46,9 +47,8 @@ class OrderCreate(CreateView):
                 for num, form in enumerate(formset.forms):
                     form.initial['product'] = basket_items[num].product
                     form.initial['quantity'] = basket_items[num].quantity
-                    form.initial['price'] = basket_items[num].product.price
-                #     заказ будет удаляться при переходе на заказ
-                # basket_items.delete()
+                    form.initial['price'] = basket_items[
+                        num].product.price  #     заказ будет удаляться при переходе на заказ  # basket_items.delete()
             else:
                 formset = OrderFormSet()
         context['orderitems'] = formset
@@ -133,6 +133,8 @@ def order_forming_complete(request, pk):
     order.status = Order.SEND_TO_PROCEED
     order.save()
     return HttpResponseRedirect(reverse('orders:list'))
+
+
 # контроллер для оплаты
 def payment_result(request):
     status = request.GET.get('ik_inv_st')
@@ -142,3 +144,11 @@ def payment_result(request):
         order_item.status = Order.PAID
         order_item.save()
     return HttpResponseRedirect(reverse('orders:list'))
+
+
+def get_product_price(request, pk):
+    if request.is_ajax():
+        product = Product.objects.get(pk=pk)
+        if product:
+            return JsonResponse({'price': product.price})
+    return JsonResponse({'price': 0})

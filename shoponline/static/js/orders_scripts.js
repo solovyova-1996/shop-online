@@ -27,21 +27,33 @@ window.onload = function () {
     }
 //
 // обработка клика на чекбокс
-    $('.order_form').on('click', 'input[type=number]', function () {
+//     $('.order_form select').change(function () {
+    $(document).on('change', '.order_form select', function () {
         let target = event.target
 //        находим номер строки
-        orderitem_num = parseInt(target.name.replace('orderitems-', '').replace('-quontity', ''))
-        if (price_arr[orderitem_num]) {
-//если в списке цен есть цена товар, получаем количество товара по номеру строки
-            orderitem_quantity = parseInt(target.value)
-            //отнимаем от полученного количества исходное количество которое было перед изменением заказа
-            delta_quantity = orderitem_quantity - quantity_array[orderitem_num]
-            quantity_array[orderitem_num] = orderitem_quantity;
-            // в функцию передаем новое количество товара и разницу между исходным количеством и текущим
-            orderSummerUpdate(price_arr[orderitem_num], delta_quantity)
+        orderitem_num = parseInt(target.name.replace('orderitems-', '').replace('-product', ''))
+        let orderitem_product_pk = target.options[target.selectedIndex].value;
+        console.log(orderitem_product_pk)
+        if (orderitem_product_pk) {
+            $.ajax({
+                url: '/orders/product/' + orderitem_product_pk + '/price/',
+                success: function (data){
+                    if(data.price){
+                        price_arr[orderitem_num]=parseFloat(data.price)
+                        if(isNaN(quantity_array[orderitem_num])){
+                            quantity_array[orderitem_num]=0;
+                        }
+                        let price_html = '<span class="orderitems'+orderitem_num+'-price">'+data.price.toString().replace(".", ",") + '</span> руб'
+                        let current_tr = $('.order_form table').find('tr:eq('+(orderitem_num+1)+')');
+                        current_tr.find('td:eq(2)').html(price_html)
+                    }
+                }
+            })
         }
 
     })
+
+
     // при клике на checkbox
     $('.order_form').on('click', 'input[type=checkbox]', function () {
         let target = event.target
@@ -70,6 +82,7 @@ window.onload = function () {
         $('.order_total_quantity').html(order_total_quantity.toString())
         $('.order_total_cost').html(order_total_price.toString() + ',00')
     }
+
     // upgrade form
     $('.formset_row').formset({
         addText: 'добавить продукт',
@@ -77,12 +90,13 @@ window.onload = function () {
         prefix: 'orderitems',
         removed: deleteOrderItem,
     });
+
     // удаление строки с заказом
-    function deleteOrderItem(row){
+    function deleteOrderItem(row) {
         // обращаемся к первой строке в заказах
         let target_name = row[0].querySelector('input[type="number"]').name;
         orderitem_num = parseInt(target_name.replace('orderitems-', '').replace('-quontity', ''))
-        delta_quantity =  - quantity_array[orderitem_num]
+        delta_quantity = -quantity_array[orderitem_num]
         orderSummerUpdate(price_arr[orderitem_num], delta_quantity)
     }
 }
