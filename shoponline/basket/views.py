@@ -12,7 +12,7 @@ def basket_add(request, product_id):
     # получаем продукт по id
     product = Product.objects.get(id=product_id)
     #  находим есть ли у пользователя уже корзина с таким продуктом
-    baskets = Basket.objects.filter(user=request.user, product=product)
+    baskets = Basket.objects.filter(user=request.user, product=product).select_related()
 
     if not baskets.exists():
         # если с таким продуктом корзины нет, создаем новую корзину
@@ -37,7 +37,7 @@ def basket_edit(request, id, quantity):
             basket.save()
         else:
             basket.delete()
-        basket = Basket.objects.filter(user=request.user)
+        basket = Basket.objects.filter(user=request.user).select_related()
         context = {'basket': basket}
         result = render_to_string('basket/basket.html', context)
         return JsonResponse({'result': result})

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>DATABASE</ID>
+  <OriginalElement>8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef</OriginalElement>
+  <nodes>
+    <node x="1232.0" y="886.0">8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.django_session</node>
+    <node x="660.6171875" y="0.0">8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.users_user</node>
+    <node x="332.375" y="750.812324929972">8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.basket_basket</node>
+    <node x="0.0" y="886.0">8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.social_auth_association</node>
+    <node x="302.125" y="437.0">8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.ordersapp_order</node>
+    <node x="785.0" y="709.0">8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.users_user_groups</node>
+    <node x="1349.2421875" y="459.0">8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.auth_permission</node>
+    <node x="0.0" y="1118.0">8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.sqlite_sequence</node>
+    <node x="0.0" y="426.0">8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.mainapp_product</node>
+    <node x="959.0" y="709.0">8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.auth_group_permissions</node>
+    <node x="1139.2421875" y="415.0">8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.django_admin_log</node>
+    <node x="464.0" y="886.0">8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.social_auth_code</node>
+    <node x="1030.0" y="886.0">8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.social_auth_nonce</node>
+    <node x="1230.5" y="132.0">8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.django_content_type</node>
+    <node x="864.125" y="481.0">8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.auth_group</node>
+    <node x="234.0" y="886.0">8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.social_auth_partial</node>
+    <node x="468.125" y="426.0">8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.social_auth_usersocialauth</node>
+    <node x="1174.0" y="709.0">8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.users_user_user_permissions</node>
+    <node x="6.0" y="132.0">8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.mainapp_category</node>
+    <node x="657.0" y="886.0">8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.sqlite_master</node>
+    <node x="825.0" y="886.0">8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.django_migrations</node>
+    <node x="697.125" y="448.0">8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.users_userprofile</node>
+    <node x="239.0" y="698.0">8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.ordersapp_orderitem</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.django_admin_log" target="8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.users_user" relationship="REFERENCES">
+      <point x="-47.5" y="-104.5" />
+      <point x="1186.7421875" y="389.0" />
+      <point x="766.1171875" y="389.0" />
+      <point x="0.0" y="181.5" />
+    </edge>
+    <edge source="8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.users_userprofile" target="8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.users_user" relationship="REFERENCES">
+      <point x="0.0" y="-71.5" />
+      <point x="770.125" y="389.0" />
+      <point x="766.1171875" y="389.0" />
+      <point x="0.0" y="181.5" />
+    </edge>
+    <edge source="8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.mainapp_product" target="8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.mainapp_category" relationship="REFERENCES">
+      <point x="0.0" y="-93.5" />
+      <point x="0.0" y="49.5" />
+    </edge>
+    <edge source="8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.users_user_groups" target="8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.users_user" relationship="REFERENCES">
+      <point x="-38.5" y="-49.5" />
+      <point x="823.5" y="655.0" />
+      <point x="853.625" y="655.0" />
+      <point x="853.625" y="389.0" />
+      <point x="766.1171875" y="389.0" />
+      <point x="0.0" y="181.5" />
+    </edge>
+    <edge source="8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.auth_group_permissions" target="8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.auth_permission" relationship="REFERENCES">
+      <point x="48.75" y="-49.5" />
+      <point x="1105.25" y="655.0" />
+      <point x="1430.2421875" y="655.0" />
+      <point x="0.0" y="60.5" />
+    </edge>
+    <edge source="8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.ordersapp_order" target="8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.users_user" relationship="REFERENCES">
+      <point x="0.0" y="-82.5" />
+      <point x="375.125" y="389.0" />
+      <point x="766.1171875" y="389.0" />
+      <point x="0.0" y="181.5" />
+    </edge>
+    <edge source="8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.django_admin_log" target="8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.django_content_type" relationship="REFERENCES">
+      <point x="47.5" y="-104.5" />
+      <point x="1281.7421875" y="389.0" />
+      <point x="1317.5" y="389.0" />
+      <point x="0.0" y="49.5" />
+    </edge>
+    <edge source="8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.ordersapp_orderitem" target="8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.ordersapp_order" relationship="REFERENCES">
+      <point x="44.0" y="-60.5" />
+      <point x="371.0" y="655.0" />
+      <point x="375.125" y="655.0" />
+      <point x="0.0" y="82.5" />
+    </edge>
+    <edge source="8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.ordersapp_orderitem" target="8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.mainapp_product" relationship="REFERENCES">
+      <point x="-44.0" y="-60.5" />
+      <point x="283.0" y="645.0" />
+      <point x="85.5" y="645.0" />
+      <point x="0.0" y="93.5" />
+    </edge>
+    <edge source="8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.users_user_user_permissions" target="8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.auth_permission" relationship="REFERENCES">
+      <point x="54.75" y="-49.5" />
+      <point x="1338.25" y="655.0" />
+      <point x="1430.2421875" y="655.0" />
+      <point x="0.0" y="60.5" />
+    </edge>
+    <edge source="8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.users_user_user_permissions" target="8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.users_user" relationship="REFERENCES">
+      <point x="-54.75" y="-49.5" />
+      <point x="1228.75" y="645.0" />
+      <point x="1128.7421875" y="645.0" />
+      <point x="1128.7421875" y="389.0" />
+      <point x="766.1171875" y="389.0" />
+      <point x="0.0" y="181.5" />
+    </edge>
+    <edge source="8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.auth_permission" target="8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.django_content_type" relationship="REFERENCES">
+      <point x="0.0" y="-60.5" />
+      <point x="1430.2421875" y="389.0" />
+      <point x="1317.5" y="389.0" />
+      <point x="0.0" y="49.5" />
+    </edge>
+    <edge source="8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.auth_group_permissions" target="8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.auth_group" relationship="REFERENCES">
+      <point x="-48.75" y="-49.5" />
+      <point x="1007.75" y="655.0" />
+      <point x="930.125" y="655.0" />
+      <point x="0.0" y="38.5" />
+    </edge>
+    <edge source="8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.social_auth_usersocialauth" target="8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.users_user" relationship="REFERENCES">
+      <point x="0.0" y="-93.5" />
+      <point x="572.625" y="389.0" />
+      <point x="766.1171875" y="389.0" />
+      <point x="0.0" y="181.5" />
+    </edge>
+    <edge source="8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.basket_basket" target="8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.mainapp_product" relationship="REFERENCES">
+      <point x="-42.75" y="-82.5" />
+      <point x="375.125" y="645.0" />
+      <point x="85.5" y="645.0" />
+      <point x="0.0" y="93.5" />
+    </edge>
+    <edge source="8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.basket_basket" target="8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.users_user" relationship="REFERENCES">
+      <point x="42.75" y="-82.5" />
+      <point x="460.625" y="655.0" />
+      <point x="231.9921875" y="655.0" />
+      <point x="231.9921875" y="389.0" />
+      <point x="766.1171875" y="389.0" />
+      <point x="0.0" y="181.5" />
+    </edge>
+    <edge source="8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.users_user_groups" target="8ce9fd5c-5c5b-42a5-b578-dfe7e5b488ef.TABLE:main.auth_group" relationship="REFERENCES">
+      <point x="38.5" y="-49.5" />
+      <point x="900.5" y="655.0" />
+      <point x="930.125" y="655.0" />
+      <point x="0.0" y="38.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.8940691927512356" showDependencies="false" x="685.8756218905472" y="-261.3510226644555" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Columns</Category>
+    <Category>Comments</Category>
+    <Category>Key columns</Category>
+    <Category>Virtual foreign keys</Category>
+  </Categories>
+</Diagram>
+
