@@ -13,5 +13,9 @@ urlpatterns = [path('admin/', admin.site.urls), path('', index, name='index'),
     path('orders/', include('ordersapp.urls', namespace='orders')),
     path('', include('social_django.urls', namespace='social')),
                ]
+
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    import debug_toolbar
+
+    urlpatterns += [path('^__debug_/', include(debug_toolbar.urls))]
