@@ -11,7 +11,7 @@ def index(request):
 def products(request, category_id=None, page_id=1):
     # фильтрация продуктов по категориям
     products = Product.objects.filter(
-        category_id=category_id) if category_id != None else Product.objects.all()
+        category_id=category_id).select_related() if category_id != None else Product.objects.all()
     paginator = Paginator(products, per_page=3)
     try:
         products_paginator = paginator.page(page_id)

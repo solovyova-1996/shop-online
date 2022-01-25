@@ -13,6 +13,7 @@ def basket_add(request, product_id):
     product = Product.objects.get(id=product_id)
     #  находим есть ли у пользователя уже корзина с таким продуктом
     baskets = Basket.objects.filter(user=request.user, product=product)
+
     if not baskets.exists():
         # если с таким продуктом корзины нет, создаем новую корзину
         Basket.objects.create(user=request.user, product=product, quantity=1)
@@ -21,6 +22,7 @@ def basket_add(request, product_id):
     else:
         # если корзина существует увеличиваем quantity
         basket = baskets.first()
+        print(basket)
         basket.quantity += 1
         basket.save()
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

@@ -33,7 +33,7 @@ INSTALLED_APPS = ['django.contrib.admin', 'django.contrib.auth',
                   'django.contrib.contenttypes', 'django.contrib.sessions',
                   'django.contrib.messages', 'django.contrib.staticfiles',
                   'mainapp', 'users', 'basket', 'admins', 'ordersapp', 'social_django',
-                  'debug_toolbar', 'template_profiler_panel']
+                  'debug_toolbar', 'template_profiler_panel','django_extensions']
 
 MIDDLEWARE = ['django.middleware.security.SecurityMiddleware',
               'django.contrib.sessions.middleware.SessionMiddleware',

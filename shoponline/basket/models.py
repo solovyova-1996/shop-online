@@ -59,17 +59,17 @@ class Basket(models.Model):
     def get_item(pk):
         return Basket.objects.get(pk).quantity
 # сигнал перед удалением корзины(или заказа) возвращаем товары на склад
-@receiver(pre_delete,sender=Basket)
-@receiver(pre_delete,sender=OrderItem)
-def product_quantity_update_delete(sender,instance,**kwargs):
-    instance.product.quantity += instance.quantity
-    instance.save()
-# сигнал перед сохранением корзины или заказа удалить товар со склада
-@receiver(pre_save,sender=Basket)
-@receiver(pre_save,sender=OrderItem)
-def product_quantity(sender,instance,**kwargs):
-    if instance.pk:
-        instance.product.quantity -= instance.quantity - instance.get_item(int(instance.pk))
-    else:
-        instance.product.quantity -= instance.quantity
-    instance.product.save()
+# @receiver(pre_delete,sender=Basket)
+# @receiver(pre_delete,sender=OrderItem)
+# def product_quantity_update_delete(sender,instance,**kwargs):
+#     instance.product.quantity += instance.quantity
+#     instance.save()
+# # сигнал перед сохранением корзины или заказа удалить товар со склада
+# @receiver(pre_save,sender=Basket)
+# @receiver(pre_save,sender=OrderItem)
+# def product_quantity(sender,instance,**kwargs):
+#     if instance.pk:
+#         instance.product.quantity -= instance.quantity - instance.get_item(int(instance.pk))
+#     else:
+#         instance.product.quantity -= instance.quantity
+#     instance.product.save()
